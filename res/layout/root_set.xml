@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+    <TableRow 
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+        <TextView  
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/oldPW"
+        />
+        <EditText android:id="@+id/oldPW"
+            android:layout_width="fill_parent" android:layout_height="wrap_content"
+            android:selectAllOnFocus="true"
+            android:password="true"
+        />   
+    </TableRow>
+    
+    <TableRow 
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+        <TextView  
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/newPW"
+        />
+        <EditText android:id="@+id/newPW"
+            android:layout_width="fill_parent" android:layout_height="wrap_content"
+            android:selectAllOnFocus="true"
+            android:password="true"
+        />   
+   </TableRow>
+   <TableRow 
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+        <TextView  
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/newPW2"
+        />
+        <EditText android:id="@+id/newPW2"
+            android:layout_width="fill_parent" android:layout_height="wrap_content"
+            android:selectAllOnFocus="true"
+            android:password="true"
+        />   
+   </TableRow>
+  
+   
+   
+   <TableRow 
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+        <Button android:id="@+id/rootYes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/yes"
+        />
+        <Button android:id="@+id/rootNo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/no"
+        />
+   </TableRow>
+   
+    
+
+</LinearLayout>
