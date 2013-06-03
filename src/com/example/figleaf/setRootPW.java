@@ -43,11 +43,13 @@ public class setRootPW  extends Activity implements OnClickListener{
 		// TODO Auto-generated method stub
 		SQLiteDatabase db = myHelper.getWritableDatabase();	 //获得数据库对象
 		Cursor c = db.query(myOpenHelper.TABLE_NAME,         //将root密码存入1号位
-				new String[]{NAME,PW}, ID+"=?", new String[]{1+""}, null, null, null); //寻找root的存放位置
+				new String[]{NAME,PW,PICPATH,DIRTY}, ID+"=?", new String[]{1+""}, null, null, null); //寻找root的存放位置
 		if(c.getCount()==0){                                 //如果没有先创建一个root
 			ContentValues values = new ContentValues(); 
 			values.put(NAME, "root");
-			values.put(PW, "123456");                        //初始密码
+			values.put(PW, "123456");//初始密码
+			values.put(PICPATH, "0");  //无路径
+			values.put(DIRTY, "1");    //初始为零
 			db.insert(TABLE_NAME, ID, values);			     //插入数据
 			c = db.query(myOpenHelper.TABLE_NAME,           //将root密码存入1号位
 						new String[]{NAME,PW}, ID+"=?", new String[]{1+""}, null, null, null); //寻找root的存放位置
@@ -72,6 +74,8 @@ public class setRootPW  extends Activity implements OnClickListener{
 				String rootName="root";          //此名字是默认的，不用设置
 				values.put(NAME, rootName);
 				values.put(PW, strArray[1]);     //存入密码
+				values.put(PICPATH, "0");  //无路径
+				values.put(DIRTY, "0");    //初始为零
 				int count = db.update(TABLE_NAME, values, ID+"=?", new String[]{1+""});	//更新数据库 存到id=1的地方
 				if(count == -1){
 					Toast.makeText(this, "修改密码失败！", Toast.LENGTH_LONG).show();

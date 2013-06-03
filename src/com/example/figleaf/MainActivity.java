@@ -2,8 +2,13 @@ package com.example.figleaf;
 
 import static com.example.figleaf.myOpenHelper.*;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.app.Activity;
+import android.app.KeyguardManager;
+import android.app.KeyguardManager.KeyguardLock;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
@@ -16,18 +21,25 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 
 public class MainActivity extends Activity implements OnClickListener {
-    Button setRootButton,addUserButton;
-    myOpenHelper mHelper;
-    String [] nameArray;
-    String [] PWArray;
-    int [] idArray;
-    ListView lv;
+    private Button setRootButton,addUserButton;
+    private myOpenHelper mHelper;
+    private String [] nameArray;
+    private String [] PWArray;
+    private int [] idArray;
+    private ListView lv;
+    private CheckBox mSetOnOff;
+    private boolean mIsLockScreenOn;
+    private final String LOCK_SCREEN_ON_OFF = "lock_screen_on_off";
+    
     BaseAdapter myAdapter = new BaseAdapter(){             //为listview写适配器
 		
 		public int getCount() {
@@ -87,6 +99,7 @@ public class MainActivity extends Activity implements OnClickListener {
 		addUserButton=(Button)this.findViewById(R.id.addNewUser);
 		addUserButton.setOnClickListener(this);
 		
+		//listView的初始化
 		 lv = (ListView)findViewById(R.id.lv);
 	     lv.setAdapter(myAdapter);
 	     lv.setOnItemClickListener(new OnItemClickListener() {
@@ -98,6 +111,32 @@ public class MainActivity extends Activity implements OnClickListener {
 //					startActivity(intent);
 				}
 		});
+	     
+	     //checkbox的初始化
+	     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);		
+			mIsLockScreenOn = prefs.getBoolean(LOCK_SCREEN_ON_OFF, false);
+			// set checkbox with saved value.
+			mSetOnOff = (CheckBox) this.findViewById(R.id.setonoff);		
+			mSetOnOff.setChecked(mIsLockScreenOn);
+			mSetOnOff.setOnCheckedChangeListener(new OnCheckedChangeListener(){
+				@Override
+				public void onCheckedChanged(CompoundButton buttonView,
+						boolean isChecked) {
+					// TODO Auto-generated method stub
+					if(buttonView.isChecked()){
+						mSetOnOff.setText("Set LockScreen ON. [Now is on]");
+	                    //check and save
+	                    EnableSystemKeyguard(false);
+	            }
+					else{
+						mSetOnOff.setText("Set LockScreen ON. [Now is off]");
+	                    EnableSystemKeyguard(true);
+					}
+				}
+				
+			});
+	     
+	     
 		
 	}
 
@@ -128,6 +167,49 @@ public class MainActivity extends Activity implements OnClickListener {
 		super.onResume();
 	}
 	
+	 @Override
+	 protected void onStart() {
+	    // TODO Auto-generated method stub
+	    super.onStart();
+	    startService(new Intent(this, MyLockScreenService.class));
+	 }
+	 
+	 @Override
+	    protected void onStop() {
+	    	// TODO Auto-generated method stub
+	    	super.onStop();
+	    	
+	    	mIsLockScreenOn = mSetOnOff.isChecked();
+	    	
+	    	if(mIsLockScreenOn)
+	    		// keep on disabling the system Keyguard
+	    		EnableSystemKeyguard(false);
+	    	else {
+	    		stopService(new Intent(this, MyLockScreenService.class));
+	    		// recover original Keyguard
+	    		EnableSystemKeyguard(true);
+	    	}
+	    	
+	    	// save the setting before leaving.
+	    	SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(this).edit();
+			editor.putBoolean(LOCK_SCREEN_ON_OFF, mIsLockScreenOn);
+			editor.commit();
+	    	    	
+	    }
+	    
+	    void EnableSystemKeyguard(boolean bEnable){
+	    	KeyguardManager mKeyguardManager=null;
+	    	KeyguardLock mKeyguardLock=null; 
+	    	
+	    	mKeyguardManager = (KeyguardManager)getSystemService(Context.KEYGUARD_SERVICE);  
+	    	mKeyguardLock = mKeyguardManager.newKeyguardLock(""); 
+	    	if(bEnable)
+	    		mKeyguardLock.reenableKeyguard();
+	    	else
+	    		mKeyguardLock.disableKeyguard();
+	    }
+	    
+	 
 	//从数据库获取信息
 	public void getInfo(){
 		SQLiteDatabase db = mHelper.getWritableDatabase();		//获取数据库连接

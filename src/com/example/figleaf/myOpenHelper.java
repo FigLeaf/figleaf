@@ -11,6 +11,8 @@ public class myOpenHelper extends SQLiteOpenHelper{
     public static final String TABLE_NAME="info";
     public static final String NAME="name";
     public static final String PW="password";
+    public static final String PICPATH="picpath";
+    public static final String DIRTY="dirty";
     
 	public myOpenHelper(Context context, String name, CursorFactory factory,
 			int version) {
@@ -24,7 +26,9 @@ public class myOpenHelper extends SQLiteOpenHelper{
 		db.execSQL("create table if not exists "+ TABLE_NAME+"("
 				+ ID + " integer primary key,"
 				+ NAME +" varchar,"
-				+ PW +" varchar)");
+				+ PW +" varchar,"
+				+ PICPATH +" varchar," 
+				+ DIRTY +" varchar)"); 
 		
 	}
 

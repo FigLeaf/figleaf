@@ -6,9 +6,12 @@
     <string name="hello_world">Hello world!</string>
     <string name="setRootPW">设置管理员密码</string>
     <string name="addNewUser">添加新用户</string>
+    <string name="mylock">锁屏</string>
     <string name="list">已经添加的用户：</string>
+    <string name="checkbox">Set LockScreen ON.</string>
     
     <string name="oldPW">请输入原密码：</string>
+    <string name="hintPW">初始密码：123456</string>
     <string name="newPW">请输入新密码：</string>
     <string name="newPW2">请再次输入新密码：</string>
     
@@ -18,5 +21,7 @@
     <string name="yes">确定</string>
     <string name="no">返回</string>
     <string name="selectHide">选择隐藏项</string>
+    
+    <string name="enpwd">请输入密码：</string>
     
 </resources>

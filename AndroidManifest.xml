@@ -3,7 +3,11 @@
     package="com.example.figleaf"
     android:versionCode="1"
     android:versionName="1.0" >
-
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD"></uses-permission>
+    <uses-permission android:name="android.permission.WAKE_LOCK"></uses-permission>
+    <uses-permission android:name="android.permission.GET_TASKS"></uses-permission>
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>  
     <uses-sdk
         android:minSdkVersion="14"
         android:targetSdkVersion="17" />
@@ -30,7 +34,17 @@
             android:name="com.example.figleaf.addUser"            
             android:label="@string/addNewUser">
         </activity>
+        <activity
+            android:name="com.example.figleaf.MyLock"
+			android:label="@string/mylock" >
+        </activity> 
+        <service android:name=".MyLockScreenService">  
+			<intent-filter>  
+				<action android:name="android.intent.action.SCREEN_OFF" />  
+			</intent-filter>
+		</service>       
     
-            </application>
+     </application>
+      
 
 </manifest>
