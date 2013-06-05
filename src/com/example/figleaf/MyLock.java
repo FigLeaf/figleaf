@@ -129,6 +129,7 @@ public class MyLock extends Activity {
             File newfile=new File(newpath);
             file.renameTo(newfile);
             file.delete();
+
             Uri localUri = Uri.fromFile(newfile);//广播消息，刷新相册
             Intent localIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, localUri);
             sendBroadcast(localIntent);

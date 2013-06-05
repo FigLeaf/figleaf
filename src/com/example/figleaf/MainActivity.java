@@ -51,13 +51,7 @@ public class MainActivity extends Activity implements OnClickListener {
             }
         }
         
-        public Object getItem(int arg0) {
-            return null;
-        }
-        
-        public long getItemId(int arg0) {
-            return 0;
-        }
+
         
         public View getView(int position, View convertView, ViewGroup parent) {   //适配器李添加内容
             LinearLayout ll = new LinearLayout(MainActivity.this);
@@ -105,10 +99,6 @@ public class MainActivity extends Activity implements OnClickListener {
          lv.setOnItemClickListener(new OnItemClickListener() {
                 public void onItemClick(AdapterView<?> arg0, View view, int position,
                         long id) {
-//                  Intent intent= new Intent(wyf.wpf.Sample_10_6.this,wyf.wpf.DetailActivity.class);
-//                  intent.putExtra("cmd", 0);      //0代表查询联系人，1代表添加联系人
-//                  intent.putExtra("id", contactsId[position]);
-//                  startActivity(intent);
                 }
         });
          
@@ -147,18 +137,7 @@ public class MainActivity extends Activity implements OnClickListener {
         return true;
     }
 
-    @Override
-    public void onClick(View v) {
-        // TODO Auto-generated method stub
-        if(v==setRootButton){
-            Intent i=new Intent(this,setRootPW.class);
-            startActivity(i); 
-        }
-        else if(v==addUserButton){
-            Intent i=new Intent(this,addUser.class);
-            startActivity(i);
-        }
-    }
+
     
      @Override
     protected void onResume() {
@@ -167,13 +146,7 @@ public class MainActivity extends Activity implements OnClickListener {
         super.onResume();
     }
     
-     @Override
-     protected void onStart() {
-        // TODO Auto-generated method stub
-        super.onStart();
-        startService(new Intent(this, MyLockScreenService.class));
-     }
-     
+
      @Override
         protected void onStop() {
             // TODO Auto-generated method stub
@@ -181,15 +154,7 @@ public class MainActivity extends Activity implements OnClickListener {
             
             mIsLockScreenOn = mSetOnOff.isChecked();
             
-            if(mIsLockScreenOn)
-                // keep on disabling the system Keyguard
-                EnableSystemKeyguard(false);
-            else {
-                stopService(new Intent(this, MyLockScreenService.class));
-                // recover original Keyguard
-                EnableSystemKeyguard(true);
-            }
-            
+
             // save the setting before leaving.
             SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(this).edit();
             editor.putBoolean(LOCK_SCREEN_ON_OFF, mIsLockScreenOn);
@@ -210,25 +175,3 @@ public class MainActivity extends Activity implements OnClickListener {
         }
         
      
-    //从数据库获取信息
-    public void getInfo(){
-        SQLiteDatabase db = mHelper.getWritableDatabase();      //获取数据库连接
-        Cursor c = db.query(TABLE_NAME, new String[]{ID,NAME,PW}, null, null, null, null, ID);
-        int idIndex = c.getColumnIndex(ID);
-        int nameIndex = c.getColumnIndex(NAME);     //获得姓名列的列号
-        int pwIndex = c.getColumnIndex(PW);
-        idArray = new int[c.getCount()];            //创建存放id的int数组对象
-        nameArray = new String[c.getCount()];           //创建存放姓名的String数组对象
-        PWArray = new String[c.getCount()]; 
-        int i=0;            
-        for(c.moveToFirst();!(c.isAfterLast());c.moveToNext()){
-            idArray[i] = c.getInt(idIndex);
-            nameArray[i] = c.getString(nameIndex);          //将姓名添加到String数组中
-            PWArray[i] = c.getString(pwIndex);          //将pW添加到String数组中
-            i++;
-        }
-        c.close();              //关闭Cursor对象
-        db.close();             //关闭SQLiteDatabase对象
-    }
-
-}
