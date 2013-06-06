@@ -1,6 +1,7 @@
 package com.example.figleaf;
 
 import static com.example.figleaf.myOpenHelper.*;
+
 import android.app.Activity;
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -13,81 +14,81 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class setRootPW  extends Activity implements OnClickListener{
+public class setRootPW extends Activity implements OnClickListener {
     myOpenHelper myHelper;
-    EditText textOldPW,textNewPW,textNewPW2;
-    Button buttonYes,buttonNo;
-    
+    EditText textOldPW, textNewPW, textNewPW2;
+    Button buttonYes, buttonNo;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.root_set);
         myHelper = new myOpenHelper(this, myOpenHelper.DB_NAME, null, 1);
-        textOldPW=(EditText)this.findViewById(R.id.oldPW);
-        textNewPW=(EditText)this.findViewById(R.id.newPW);
-        textNewPW2=(EditText)this.findViewById(R.id.newPW2);
-        buttonYes=(Button)this.findViewById(R.id.rootYes);
-        buttonNo=(Button)this.findViewById(R.id.rootNo);
+        textOldPW = (EditText) this.findViewById(R.id.oldPW);
+        textNewPW = (EditText) this.findViewById(R.id.newPW);
+        textNewPW2 = (EditText) this.findViewById(R.id.newPW2);
+        buttonYes = (Button) this.findViewById(R.id.rootYes);
+        buttonNo = (Button) this.findViewById(R.id.rootNo);
         buttonYes.setOnClickListener(this);
         buttonNo.setOnClickListener(this);
-        
-        
+
+
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
+
     @Override
     public void onClick(View v) {
         // TODO Auto-generated method stub
-        SQLiteDatabase db = myHelper.getWritableDatabase();  //»ñµÃÊý¾Ý¿â¶ÔÏó
-        Cursor c = db.query(myOpenHelper.TABLE_NAME,         //½«rootÃÜÂë´æÈë1ºÅÎ»
-                new String[]{NAME,PW,PICPATH,DIRTY}, ID+"=?", new String[]{1+""}, null, null, null); //Ñ°ÕÒrootµÄ´æ·ÅÎ»ÖÃ
-        if(c.getCount()==0){                                 //Èç¹ûÃ»ÓÐÏÈ´´½¨Ò»¸öroot
-            ContentValues values = new ContentValues(); 
+        SQLiteDatabase db = myHelper.getWritableDatabase();  //ï¿½ï¿½ï¿½ï¿½ï¿½Ý¿ï¿½ï¿½ï¿½ï¿½
+        Cursor c = db.query(myOpenHelper.TABLE_NAME,         //ï¿½ï¿½rootï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½1ï¿½ï¿½Î»
+                new String[]{NAME, PW, PICPATH, DIRTY}, ID + "=?", new String[]{1 + ""}, null, null, null); //Ñ°ï¿½ï¿½rootï¿½Ä´ï¿½ï¿½Î»ï¿½ï¿½
+        if (c.getCount() == 0) {                                 //ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½È´ï¿½ï¿½ï¿½Ò»ï¿½ï¿½root
+            ContentValues values = new ContentValues();
             values.put(NAME, "root");
-            values.put(PW, "123456");//³õÊ¼ÃÜÂë
-            values.put(PICPATH, "0");  //ÎÞÂ·¾¶
-            values.put(DIRTY, "1");    //³õÊ¼ÎªÁã
-            db.insert(TABLE_NAME, ID, values);               //²åÈëÊý¾Ý
-            c = db.query(myOpenHelper.TABLE_NAME,           //½«rootÃÜÂë´æÈë1ºÅÎ»
-                        new String[]{NAME,PW}, ID+"=?", new String[]{1+""}, null, null, null); //Ñ°ÕÒrootµÄ´æ·ÅÎ»ÖÃ
+            values.put(PW, "123456");//ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½
+            values.put(PICPATH, "0");  //ï¿½ï¿½Â·ï¿½ï¿½
+            values.put(DIRTY, "1");    //ï¿½ï¿½Ê¼Îªï¿½ï¿½
+            db.insert(TABLE_NAME, ID, values);               //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+            c = db.query(myOpenHelper.TABLE_NAME,           //ï¿½ï¿½rootï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½1ï¿½ï¿½Î»
+                    new String[]{NAME, PW}, ID + "=?", new String[]{1 + ""}, null, null, null); //Ñ°ï¿½ï¿½rootï¿½Ä´ï¿½ï¿½Î»ï¿½ï¿½
         }
         c.moveToFirst();
-        String oldRootPW=c.getString(1);               //»ñÈ¡¾ÉÃÜÂë
-        
-        if(v==buttonNo){
+        String oldRootPW = c.getString(1);               //ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+
+        if (v == buttonNo) {
             finish();
-        }
-        else if(v==buttonYes){                  //change the root PW
-            String [] strArray=new String[3];
-            strArray[0]=textOldPW.getText().toString().trim();   //»ñÈ¡¾ÉÃÜÂë
-            strArray[1]=textNewPW.getText().toString().trim();
-            strArray[2]=textNewPW2.getText().toString().trim();
-            if(!strArray[1].equals(strArray[2])){                 //Èç¹ûÃÜÂëÁ½´Î²»Í¬
-                Toast.makeText(setRootPW.this, "Á½´ÎÃÜÂëÊäÈë²»ÏàÍ¬£¡", Toast.LENGTH_LONG).show();
-            }else if(!oldRootPW.equals(strArray[0])){                                           //Èç¹ûÃÜÂë´íÎó
-                Toast.makeText(setRootPW.this, "Ô­ÃÜÂëÊäÈë´íÎó£¡", Toast.LENGTH_LONG).show();
-            }else{                                                      
+        } else if (v == buttonYes) {                  //change the root PW
+            String[] strArray = new String[3];
+            strArray[0] = textOldPW.getText().toString().trim();   //ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+            strArray[1] = textNewPW.getText().toString().trim();
+            strArray[2] = textNewPW2.getText().toString().trim();
+            if (!strArray[1].equals(strArray[2])) {                 //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î²ï¿½Í¬
+                Toast.makeText(setRootPW.this, "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ë²»ï¿½ï¿½Í¬ï¿½ï¿½", Toast.LENGTH_LONG).show();
+            } else if (!oldRootPW.equals(strArray[0])) {                                           //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+                Toast.makeText(setRootPW.this, "Ô­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", Toast.LENGTH_LONG).show();
+            } else {
                 ContentValues values = new ContentValues();
-                String rootName="root";          //´ËÃû×ÖÊÇÄ¬ÈÏµÄ£¬²»ÓÃÉèÖÃ
+                String rootName = "root";          //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¬ï¿½ÏµÄ£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                 values.put(NAME, rootName);
-                values.put(PW, strArray[1]);     //´æÈëÃÜÂë
-                values.put(PICPATH, "0");  //ÎÞÂ·¾¶
-                values.put(DIRTY, "0");    //³õÊ¼ÎªÁã
-                int count = db.update(TABLE_NAME, values, ID+"=?", new String[]{1+""}); //¸üÐÂÊý¾Ý¿â ´æµ½id=1µÄµØ·½
-                if(count == -1){
-                    Toast.makeText(this, "ÐÞ¸ÄÃÜÂëÊ§°Ü£¡", Toast.LENGTH_LONG).show();
+                values.put(PW, strArray[1]);     //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+                values.put(PICPATH, "0");  //ï¿½ï¿½Â·ï¿½ï¿½
+                values.put(DIRTY, "0");    //ï¿½ï¿½Ê¼Îªï¿½ï¿½
+                int count = db.update(TABLE_NAME, values, ID + "=?", new String[]{1 + ""}); //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý¿ï¿½ ï¿½æµ½id=1ï¿½ÄµØ·ï¿½
+                if (count == -1) {
+                    Toast.makeText(this, "ï¿½Þ¸ï¿½ï¿½ï¿½ï¿½ï¿½Ê§ï¿½Ü£ï¿½", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(this, "ï¿½Þ¸ï¿½ï¿½ï¿½ï¿½ï¿½É¹ï¿½ï¿½ï¿½", Toast.LENGTH_LONG).show();
                 }
-                else{
-                    Toast.makeText(this, "ÐÞ¸ÄÃÜÂë³É¹¦£¡", Toast.LENGTH_LONG).show();
-                }
-                }
+            }
             c.close();
             db.close();
         }
-        
+
     }
 
 }

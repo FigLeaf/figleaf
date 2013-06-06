@@ -3,6 +3,7 @@ package com.example.figleaf;
 import static com.example.figleaf.myOpenHelper.*;
 
 import java.io.IOException;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ContentResolver;
@@ -26,28 +27,27 @@ import android.widget.Toast;
 public class addUser extends Activity implements OnClickListener {
     private static final String TAG = "PIC";
     Button buttonSelectHide;
-    Button buttonAddYes,buttonAddNo;
-    EditText textUserName,textUserPW,textUserPW2;
+    Button buttonAddYes, buttonAddNo;
+    EditText textUserName, textUserPW, textUserPW2;
     myOpenHelper myHelper;
     String picPath;
 
-    
-    
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.new_user_add);
         myHelper = new myOpenHelper(this, myOpenHelper.DB_NAME, null, 1);
-        buttonSelectHide=(Button)this.findViewById(R.id.selectHide);
+        buttonSelectHide = (Button) this.findViewById(R.id.selectHide);
         buttonSelectHide.setOnClickListener(this);
-        buttonAddYes=(Button)this.findViewById(R.id.addYes);
-        buttonAddNo=(Button)this.findViewById(R.id.addNo);
+        buttonAddYes = (Button) this.findViewById(R.id.addYes);
+        buttonAddNo = (Button) this.findViewById(R.id.addNo);
         buttonAddYes.setOnClickListener(this);
         buttonAddNo.setOnClickListener(this);
-        textUserName=(EditText)this.findViewById(R.id.userName);
-        textUserPW=(EditText)this.findViewById(R.id.userPW);
-        textUserPW2=(EditText)this.findViewById(R.id.userPW2);
-        picPath=new String();
-        
+        textUserName = (EditText) this.findViewById(R.id.userName);
+        textUserPW = (EditText) this.findViewById(R.id.userPW);
+        textUserPW2 = (EditText) this.findViewById(R.id.userPW2);
+        picPath = new String();
+
     }
 
     @Override
@@ -56,99 +56,98 @@ public class addUser extends Activity implements OnClickListener {
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
-    
-    public void onClick(View v){
-        if(v==buttonSelectHide){
+
+    public void onClick(View v) {
+        if (v == buttonSelectHide) {
             createDialog();
-        }else if(v==buttonAddNo){
+        } else if (v == buttonAddNo) {
             finish();
-        }else if(v==buttonAddYes){
-            String [] strArray=new String[3];
-            strArray[0]=textUserName.getText().toString().trim();  
-            strArray[1]=textUserPW.getText().toString().trim();
-            strArray[2]=textUserPW2.getText().toString().trim();
-            SQLiteDatabase db = myHelper.getWritableDatabase(); //»ñµÃÊý¾Ý¿â¶ÔÏó
-            Cursor c = db.query(myOpenHelper.TABLE_NAME,         //¼ì²éÊÇ·ñÏÈÉèÖÃrootPW
-                    new String[]{NAME,PW}, ID+"=?", new String[]{1+""}, null, null, null); //Ñ°ÕÒrootµÄ´æ·ÅÎ»ÖÃ
-            
-            if(c.getCount()==0){
-                Toast.makeText(addUser.this, "ÇëÏÈÉèÖÃrootÃÜÂë£¡", Toast.LENGTH_LONG).show();   
-            }else if(!strArray[1].equals(strArray[2])){                //ÏÈÅÐ¶ÏÁ½´ÎÃÜÂëÊÇ·ñÏàÍ¬
-                Toast.makeText(addUser.this, "Á½´ÎÃÜÂëÊäÈë²»ÏàÍ¬£¡", Toast.LENGTH_LONG).show(); 
-            }else{
-                    ContentValues values = new ContentValues();
-                    values.put(NAME, strArray[0]);
-                    values.put(PW, strArray[1]);//´æÈëÃÜÂë
-                    values.put(PICPATH, picPath);//´æÈëÍ¼Æ¬µØÖ·
-                    values.put(DIRTY, "0");
-                    long count = db.insert(TABLE_NAME, ID, values);         //²åÈëÊý¾Ý
-                    db.close();
-                    if(count == -1){
-                        Toast.makeText(this, "´´½¨ÓÃ»§Ê§°Ü£¡", Toast.LENGTH_LONG).show();
-                    }
-                    else{
-                        Toast.makeText(this, "´´½¨ÓÃ»§³É¹¦£¡", Toast.LENGTH_LONG).show();
-                    }
+        } else if (v == buttonAddYes) {
+            String[] strArray = new String[3];
+            strArray[0] = textUserName.getText().toString().trim();
+            strArray[1] = textUserPW.getText().toString().trim();
+            strArray[2] = textUserPW2.getText().toString().trim();
+            SQLiteDatabase db = myHelper.getWritableDatabase(); //ï¿½ï¿½ï¿½ï¿½ï¿½Ý¿ï¿½ï¿½ï¿½ï¿½
+            Cursor c = db.query(myOpenHelper.TABLE_NAME,         //ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½rootPW
+                    new String[]{NAME, PW}, ID + "=?", new String[]{1 + ""}, null, null, null); //Ñ°ï¿½ï¿½rootï¿½Ä´ï¿½ï¿½Î»ï¿½ï¿½
+
+            if (c.getCount() == 0) {
+                Toast.makeText(addUser.this, "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½rootï¿½ï¿½ï¿½ë£¡", Toast.LENGTH_LONG).show();
+            } else if (!strArray[1].equals(strArray[2])) {                //ï¿½ï¿½ï¿½Ð¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½Í¬
+                Toast.makeText(addUser.this, "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ë²»ï¿½ï¿½Í¬ï¿½ï¿½", Toast.LENGTH_LONG).show();
+            } else {
+                ContentValues values = new ContentValues();
+                values.put(NAME, strArray[0]);
+                values.put(PW, strArray[1]);//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+                values.put(PICPATH, picPath);//ï¿½ï¿½ï¿½ï¿½Í¼Æ¬ï¿½ï¿½Ö·
+                values.put(DIRTY, "0");
+                long count = db.insert(TABLE_NAME, ID, values);         //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+                db.close();
+                if (count == -1) {
+                    Toast.makeText(this, "ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½Ê§ï¿½Ü£ï¿½", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(this, "ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½É¹ï¿½ï¿½ï¿½", Toast.LENGTH_LONG).show();
+                }
             }
         }
-        
+
     }
-    
+
     protected void createDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.selectHide)
-               .setItems(R.array.selectItems, new DialogInterface.OnClickListener() {
-                   public void onClick(DialogInterface dialog, int which) {
-                   // The 'which' argument contains the index position
-                   // of the selected item
-                       if(which==0){                       //½øÈëÏà²á£¬Ñ¡ÔñÍ¼Æ¬
-                        Intent intent = new Intent();
-                        intent.setType("image/*");
-                        intent.setAction(Intent.ACTION_GET_CONTENT);
-                        startActivityForResult(intent, 1);
-                       }
-                       
-                   }
-                });
-        builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                .setItems(R.array.selectItems, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
+                        // The 'which' argument contains the index position
+                        // of the selected item
+                        if (which == 0) {                       //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½á£¬Ñ¡ï¿½ï¿½Í¼Æ¬
+                            Intent intent = new Intent();
+                            intent.setType("image/*");
+                            intent.setAction(Intent.ACTION_GET_CONTENT);
+                            startActivityForResult(intent, 1);
+                        }
+
                     }
                 });
+        builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
         builder.create().show();
     }
-    
-    protected void onActivityResult(int requestCode, int resultCode, Intent data){
 
-        if (resultCode != RESULT_OK) {        //´Ë´¦µÄ RESULT_OK ÊÇÏµÍ³×Ô¶¨ÒåµÃÒ»¸ö³£Á¿
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-            Log.e(TAG,"ActivityResult resultCode error");
+        if (resultCode != RESULT_OK) {        //ï¿½Ë´ï¿½ï¿½ï¿½ RESULT_OK ï¿½ï¿½ÏµÍ³ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+
+            Log.e(TAG, "ActivityResult resultCode error");
 
             return;
 
         }
         Bitmap bm = null;
-        //Íâ½çµÄ³ÌÐò·ÃÎÊContentProviderËùÌá¹©Êý¾Ý ¿ÉÒÔÍ¨¹ýContentResolver½Ó¿Ú
+        //ï¿½ï¿½ï¿½Ä³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ContentProviderï¿½ï¿½ï¿½á¹©ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Í¨ï¿½ï¿½ContentResolverï¿½Ó¿ï¿½
         ContentResolver resolver = getContentResolver();
-        //´Ë´¦µÄÓÃÓÚÅÐ¶Ï½ÓÊÕµÄActivityÊÇ²»ÊÇÄãÏëÒªµÄÄÇ¸ö
+        //ï¿½Ë´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¶Ï½ï¿½ï¿½Õµï¿½Activityï¿½Ç²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½Ç¸ï¿½
         if (requestCode == 1) {
             try {
-                Uri originalUri = data.getData();        //»ñµÃÍ¼Æ¬µÄuri
-                bm = MediaStore.Images.Media.getBitmap(resolver, originalUri);        //ÏÔµÃµ½bitmapÍ¼Æ¬
-                //ÕâÀï¿ªÊ¼µÄµÚ¶þ²¿·Ö£¬»ñÈ¡Í¼Æ¬µÄÂ·¾¶£º
+                Uri originalUri = data.getData();        //ï¿½ï¿½ï¿½Í¼Æ¬ï¿½ï¿½uri
+                bm = MediaStore.Images.Media.getBitmap(resolver, originalUri);        //ï¿½ÔµÃµï¿½bitmapÍ¼Æ¬
+                //ï¿½ï¿½ï¿½ï¿ªÊ¼ï¿½ÄµÚ¶ï¿½ï¿½ï¿½ï¿½Ö£ï¿½ï¿½ï¿½È¡Í¼Æ¬ï¿½ï¿½Â·ï¿½ï¿½ï¿½ï¿½
                 String[] proj = {MediaStore.Images.Media.DATA};
-                //ºÃÏñÊÇandroid¶àÃ½ÌåÊý¾Ý¿âµÄ·â×°½Ó¿Ú£¬¾ßÌåµÄ¿´AndroidÎÄµµ
+                //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½androidï¿½ï¿½Ã½ï¿½ï¿½ï¿½ï¿½Ý¿ï¿½Ä·ï¿½×°ï¿½Ó¿Ú£ï¿½ï¿½ï¿½ï¿½ï¿½Ä¿ï¿½Androidï¿½Äµï¿½
                 @SuppressWarnings("deprecation")
                 Cursor cursor = managedQuery(originalUri, proj, null, null, null);
-                //°´ÎÒ¸öÈËÀí½â Õâ¸öÊÇ»ñµÃÓÃ»§Ñ¡ÔñµÄÍ¼Æ¬µÄË÷ÒýÖµ
+                //ï¿½ï¿½ï¿½Ò¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ç»ï¿½ï¿½ï¿½Ã»ï¿½Ñ¡ï¿½ï¿½ï¿½Í¼Æ¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµ
                 int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-                //½«¹â±êÒÆÖÁ¿ªÍ· £¬Õâ¸öºÜÖØÒª£¬²»Ð¡ÐÄºÜÈÝÒ×ÒýÆðÔ½½ç
+                //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í· ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½Ð¡ï¿½Äºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô½ï¿½ï¿½
                 cursor.moveToFirst();
-                //×îºó¸ù¾ÝË÷ÒýÖµ»ñÈ¡Í¼Æ¬Â·¾¶
+                //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½È¡Í¼Æ¬Â·ï¿½ï¿½
                 String path = cursor.getString(column_index);
                 Toast.makeText(this, path, Toast.LENGTH_LONG).show();
-                picPath=path;                         //¼ÇÂ¼Í¼Æ¬Â·¾¶
-//              File file = new File(path);                //¸ù¾ÝÂ·¾¶£¬»ñµÃÎÄ¼þ
+                picPath = path;                         //ï¿½ï¿½Â¼Í¼Æ¬Â·ï¿½ï¿½
+//              File file = new File(path);                //ï¿½ï¿½ï¿½Â·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½
 //              String fpath=file.getParentFile().getPath();
 //              Toast.makeText(this, fpath, Toast.LENGTH_LONG).show();
 //              String fname=file.getName();
@@ -157,18 +156,17 @@ public class addUser extends Activity implements OnClickListener {
 //              file.renameTo(newfile);
 //              Toast.makeText(this, newfile.getName(), Toast.LENGTH_LONG).show();
 //              file.delete();  
-//              Uri localUri = Uri.fromFile(file);//¹ã²¥ÏûÏ¢£¬Ë¢ÐÂÏà²á
+//              Uri localUri = Uri.fromFile(file);//ï¿½ã²¥ï¿½ï¿½Ï¢ï¿½ï¿½Ë¢ï¿½ï¿½ï¿½ï¿½ï¿½
 //              Intent localIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, localUri);
 //              sendBroadcast(localIntent);
-            }catch (IOException e) {
+            } catch (IOException e) {
 
-                Log.e(TAG,e.toString()); 
+                Log.e(TAG, e.toString());
 
             }
 
         }
 
-     
 
     }
 }
