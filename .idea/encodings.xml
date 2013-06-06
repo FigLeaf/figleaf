@@ -3,6 +3,8 @@
   <component name="Encoding" useUTFGuessing="true" native2AsciiForPropertiesFiles="false">
     <file url="file://$PROJECT_DIR$/src/com/example/figleaf/MainActivity.java" charset="GB18030" />
     <file url="file://$PROJECT_DIR$/src/com/example/figleaf/MyLock.java" charset="GB18030" />
+    <file url="file://$PROJECT_DIR$/src/com/example/figleaf/addUser.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/example/figleaf/setRootPW.java" charset="Big5-HKSCS" />
   </component>
 </project>
 

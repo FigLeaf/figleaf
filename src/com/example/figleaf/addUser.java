@@ -32,7 +32,6 @@ public class addUser extends Activity implements OnClickListener {
     myOpenHelper myHelper;
     String picPath;
 
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.new_user_add);
@@ -67,21 +66,21 @@ public class addUser extends Activity implements OnClickListener {
             strArray[0] = textUserName.getText().toString().trim();
             strArray[1] = textUserPW.getText().toString().trim();
             strArray[2] = textUserPW2.getText().toString().trim();
-            SQLiteDatabase db = myHelper.getWritableDatabase(); //�����ݿ����
-            Cursor c = db.query(myOpenHelper.TABLE_NAME,         //����Ƿ�������rootPW
-                    new String[]{NAME, PW}, ID + "=?", new String[]{1 + ""}, null, null, null); //Ѱ��root�Ĵ��λ��
+            SQLiteDatabase db = myHelper.getWritableDatabase();
+            Cursor c = db.query(myOpenHelper.TABLE_NAME,         //set rootPW
+                    new String[]{NAME, PW}, ID + "=?", new String[]{1 + ""}, null, null, null);
 
             if (c.getCount() == 0) {
                 Toast.makeText(addUser.this, "��������root���룡", Toast.LENGTH_LONG).show();
-            } else if (!strArray[1].equals(strArray[2])) {                //���ж����������Ƿ���ͬ
+            } else if (!strArray[1].equals(strArray[2])) {
                 Toast.makeText(addUser.this, "�����������벻��ͬ��", Toast.LENGTH_LONG).show();
             } else {
                 ContentValues values = new ContentValues();
                 values.put(NAME, strArray[0]);
-                values.put(PW, strArray[1]);//��������
-                values.put(PICPATH, picPath);//����ͼƬ��ַ
+                values.put(PW, strArray[1]);
+                values.put(PICPATH, picPath);
                 values.put(DIRTY, "0");
-                long count = db.insert(TABLE_NAME, ID, values);         //�������
+                long count = db.insert(TABLE_NAME, ID, values);
                 db.close();
                 if (count == -1) {
                     Toast.makeText(this, "�����û�ʧ�ܣ�", Toast.LENGTH_LONG).show();
@@ -100,7 +99,7 @@ public class addUser extends Activity implements OnClickListener {
                     public void onClick(DialogInterface dialog, int which) {
                         // The 'which' argument contains the index position
                         // of the selected item
-                        if (which == 0) {                       //������ᣬѡ��ͼƬ
+                        if (which == 0) {                       //
                             Intent intent = new Intent();
                             intent.setType("image/*");
                             intent.setAction(Intent.ACTION_GET_CONTENT);
@@ -119,7 +118,7 @@ public class addUser extends Activity implements OnClickListener {
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        if (resultCode != RESULT_OK) {        //�˴��� RESULT_OK ��ϵͳ�Զ����һ������
+        if (resultCode != RESULT_OK) {        //RESULT_OK
 
             Log.e(TAG, "ActivityResult resultCode error");
 
@@ -127,27 +126,26 @@ public class addUser extends Activity implements OnClickListener {
 
         }
         Bitmap bm = null;
-        //���ĳ������ContentProvider���ṩ��� ����ͨ��ContentResolver�ӿ�
+        //ContentProvider ContentResolver
         ContentResolver resolver = getContentResolver();
-        //�˴��������жϽ��յ�Activity�ǲ�������Ҫ���Ǹ�
+        //Activity
         if (requestCode == 1) {
             try {
-                Uri originalUri = data.getData();        //���ͼƬ��uri
-                bm = MediaStore.Images.Media.getBitmap(resolver, originalUri);        //�Եõ�bitmapͼƬ
-                //���￪ʼ�ĵڶ����֣���ȡͼƬ��·����
+                Uri originalUri = data.getData();
+                bm = MediaStore.Images.Media.getBitmap(resolver, originalUri);        //bitmap
                 String[] proj = {MediaStore.Images.Media.DATA};
-                //������android��ý����ݿ�ķ�װ�ӿڣ�����Ŀ�Android�ĵ�
+
                 @SuppressWarnings("deprecation")
                 Cursor cursor = managedQuery(originalUri, proj, null, null, null);
-                //���Ҹ������ ����ǻ���û�ѡ���ͼƬ������ֵ
+
                 int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-                //�����������ͷ ���������Ҫ����С�ĺ���������Խ��
+
                 cursor.moveToFirst();
-                //���������ֵ��ȡͼƬ·��
+
                 String path = cursor.getString(column_index);
                 Toast.makeText(this, path, Toast.LENGTH_LONG).show();
-                picPath = path;                         //��¼ͼƬ·��
-//              File file = new File(path);                //���·��������ļ�
+                picPath = path;
+//              File file = new File(path);
 //              String fpath=file.getParentFile().getPath();
 //              Toast.makeText(this, fpath, Toast.LENGTH_LONG).show();
 //              String fname=file.getName();
@@ -156,7 +154,7 @@ public class addUser extends Activity implements OnClickListener {
 //              file.renameTo(newfile);
 //              Toast.makeText(this, newfile.getName(), Toast.LENGTH_LONG).show();
 //              file.delete();  
-//              Uri localUri = Uri.fromFile(file);//�㲥��Ϣ��ˢ�����
+//              Uri localUri = Uri.fromFile(file);
 //              Intent localIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, localUri);
 //              sendBroadcast(localIntent);
             } catch (IOException e) {
