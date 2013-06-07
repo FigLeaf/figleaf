@@ -11,14 +11,7 @@
     </shared>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="286ced15-f522-4767-8ac9-407ac3fc9b05" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/res/drawable-hdpi/bg1.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/res/drawable-hdpi/bg2.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/res/drawable-hdpi/bg3_rain.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/res/drawable-hdpi/bg_et.jpg" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/layout/lockscreen.xml" afterPath="$PROJECT_DIR$/res/layout/lockscreen.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-    </list>
+    <list default="true" id="286ced15-f522-4767-8ac9-407ac3fc9b05" name="Default" comment="" />
     <ignored path="FigLeaf.iws" />
     <ignored path=".idea/workspace.xml" />
     <file path="/Dummy.txt" changelist="286ced15-f522-4767-8ac9-407ac3fc9b05" time="1370610029635" ignored="false" />
@@ -29,6 +22,7 @@
     <file path="/MainActivity.java" changelist="286ced15-f522-4767-8ac9-407ac3fc9b05" time="1370518662681" ignored="false" />
     <file path="/addUser.java" changelist="286ced15-f522-4767-8ac9-407ac3fc9b05" time="1370532475093" ignored="false" />
     <file path="/lockscreen.xml" changelist="286ced15-f522-4767-8ac9-407ac3fc9b05" time="1370610099601" ignored="false" />
+    <file path="$PROJECT_DIR$/.idea/workspace.xml" changelist="286ced15-f522-4767-8ac9-407ac3fc9b05" time="1370610419928" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -107,7 +101,10 @@
         <entry file="file://$PROJECT_DIR$/res/layout/lockscreen.xml">
           <provider selected="true" editor-type-id="text-editor">
             <state line="1" column="8" selection-start="47" selection-end="47" vertical-scroll-proportion="0.02640845">
-              <folding />
+              <folding>
+                <element signature="e#662#677#0" expanded="true" />
+                <element signature="e#1329#1342#0" expanded="true" />
+              </folding>
             </state>
           </provider>
           <provider editor-type-id="android-designer">
@@ -452,7 +449,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="29452000" />
+    <option name="totallyTimeSpent" value="30060000" />
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
@@ -475,7 +472,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-2" y="-3" width="1370" height="775" extended-state="6" />
+    <frame x="-2" y="-3" width="1370" height="775" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3287037" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -639,7 +636,10 @@
     <entry file="file://$PROJECT_DIR$/res/layout/lockscreen.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state line="1" column="8" selection-start="47" selection-end="47" vertical-scroll-proportion="0.02640845">
-          <folding />
+          <folding>
+            <element signature="e#662#677#0" expanded="true" />
+            <element signature="e#1329#1342#0" expanded="true" />
+          </folding>
         </state>
       </provider>
       <provider editor-type-id="android-designer">
